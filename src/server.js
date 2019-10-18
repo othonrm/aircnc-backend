@@ -5,6 +5,10 @@ const path = require('path');
 const socketio = require('socket.io');
 const http = require('http');
 
+require('dotenv').config();
+
+// console.log("Application name: ", process.env.APP_NAME);
+
 const routes = require('./routes');
 const middlewares = require('./middlewares');
 
@@ -12,7 +16,7 @@ const app = express();
 const server = http.Server(app);
 const io = socketio(server);
 
-mongoose.connect('mongodb+srv://othon:othon@omnistack9-6kbmm.mongodb.net/semana09?retryWrites=true&w=majority', {
+mongoose.connect(process.env.DB_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });

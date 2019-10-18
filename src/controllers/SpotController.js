@@ -7,12 +7,27 @@ module.exports = {
 
         const { tech } = req.query;
 
-        const spots = await Spot.find({ techs: tech });
+        let spots = [];
+
+        if(!tech)
+        {
+            spots = await Spot.find();
+        }
+        else
+        {
+            spots = await Spot.find({ techs: tech });
+        }
+
 
         return res.json(spots);
     },
 
     async store(req, res) {
+
+        if(req.file == null)
+        {
+            return res.status(500).json({ error: "Você precisa enviar uma thumbnail!" });
+        }
 
         const { filename } = req.file;
         const { company, techs, price } = req.body;
